@@ -1,4 +1,4 @@
-package org.lmind.io
+package org.scalamind.io
 
 import java.{io => jio}
 import scala.io.Codec

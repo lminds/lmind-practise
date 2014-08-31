@@ -1,4 +1,4 @@
-package org.lmind.io
+package org.scalamind.io
 
 import scala.collection.Iterator
 

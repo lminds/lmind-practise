@@ -1,4 +1,4 @@
-package org.lmind.lang
+package org.scalamind.lang
 import java.util.List
 import java.util.ArrayList
 import java.util.concurrent.ConcurrentLinkedQueue

@@ -1,4 +1,4 @@
-package org.lmind.thread
+package org.scalamind.thread
 import scala.actors.threadpool.locks.ReentrantLock
 import scala.actors.threadpool.TimeUnit
 import java.util.Date

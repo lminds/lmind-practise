@@ -1,4 +1,4 @@
-package org.lmind.thread
+package org.scalamind.thread
 
 object Threads {
 

@@ -1,4 +1,4 @@
-package org.lmind.lang
+package org.scalamind.lang
 
 class Lock {
 

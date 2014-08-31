@@ -1,8 +1,17 @@
-package org.lmind.io
+package org.scalamind.io
 
-import scala.collection.mutable._
+import scala.collection.Iterator
+import scala.collection.mutable.ArrayBuffer
+import scala.collection.mutable.ListBuffer
 
-class FallbackIterator[A](iter:Iterator[A], buffSize: Int) extends Iterator[A] {
+object Collection {
+
+  /**
+   * 
+   */
+  def asCanBackIterator[A](iter: Iterator[A], backLimit: Int) = {
+
+    new CanBackIterator[A] {
 
       // 迭代时的历史记录,以便用于回溯,越近的排在越前面
       private val history = ListBuffer[A]()
@@ -25,7 +34,7 @@ class FallbackIterator[A](iter:Iterator[A], buffSize: Int) extends Iterator[A] {
         // 历史空间已经遍历完了,需要从iter填充数据到history
         if (index < 0) {
           if (iter.hasNext) {
-            if (history.length > buffSize) {
+            if (history.length > backLimit) {
               history.remove(history.length - 1)
             }
             history.insert(0, iter.next)
@@ -36,13 +45,13 @@ class FallbackIterator[A](iter:Iterator[A], buffSize: Int) extends Iterator[A] {
         return result
       }
 
-      def fallback(count: Int): Unit = {
+      def back(count: Int): Unit = {
         index = index + count
       }
-      
-      def fallback: Unit = fallback(1)
 
       def peek: A = history(index)
       
       def prev(count: Int): A = history(index + count)
     }
+  }
+}
