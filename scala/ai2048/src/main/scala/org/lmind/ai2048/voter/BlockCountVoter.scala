@@ -5,6 +5,7 @@ import org.lmind.ai2048.Stage
 class BlockCountVoter {
 
   def vote(stage:Stage) = {
-    stage.emptys.size.toDouble
+    val size = stage.emptys.size
+    1 - (size * size).toDouble / 256
   }
 }
