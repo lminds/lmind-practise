@@ -66,6 +66,10 @@ class Stage(val data: Map[(Int, Int), Int]) {
   def blocks = {
     data.filter(o => o._2 != 0)
   }
+  
+  def isSame(stage:Stage) = {
+    data.equals(stage.data)
+  }
 
   def combine(list: List[(Int, Int)]) = {
     val builder = List.newBuilder[((Int, Int), Int)]
