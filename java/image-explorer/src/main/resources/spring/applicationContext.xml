@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <bean id="fileSystem" class="org.lmind.explorer.core.FileSystem">
+    <property name="root" value="D:\Program Files (x86)\zdnet\kknd\comic\good" />
+  </bean>
+
+</beans>
