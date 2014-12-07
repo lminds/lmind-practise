@@ -17,17 +17,6 @@
     <property name="driverClassName" value="org.h2.Driver" />
   </bean>
 
-  <bean id="dataSource2" class="com.mchange.v2.c3p0.ComboPooledDataSource">
-    <property name="driverClass" value="org.h2.Driver" />
-    <property name="jdbcUrl" value="jdbc:h2:C:/h2db/db;SCHEMA=WEB_RESOURCES" />
-    <property name="user" value="sa" />
-    <property name="password" value="sa" />
-
-    <property name="minPoolSize" value="5" />
-    <property name="maxPoolSize" value="5" />
-    <property name="initialPoolSize" value="5" />
-  </bean>
-
   <bean id="entityManagerFactory"
     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     <property name="dataSource" ref="dataSource" />
@@ -54,10 +43,19 @@
 
   <bean id="schedulingTaskExecutor"
     class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+    <property name="corePoolSize" value="3"/>
+    <property name="maxPoolSize" value="3"/>
+    <property name="queueCapacity" value="10000"/>
+    <property name="waitForTasksToCompleteOnShutdown" value="true"/>
   </bean>
+  
+  <bean class="org.lmind.webcrawler.dao.BookRepository"></bean>
 
   <bean class="org.lmind.webcrawler.mtmju.Mtmju"></bean>
 
   <bean class="org.lmind.webcrawler.book.biquge.Biquge"></bean>
   <bean class="org.lmind.webcrawler.book.biquge.BiqugeCrawler"></bean>
+  
+  <bean class="org.lmind.webcrawler.book.qidianfree.QidianFree"></bean>
+  <bean class="org.lmind.webcrawler.book.qidianfree.QidianFreeCrawler"></bean>
 </beans>

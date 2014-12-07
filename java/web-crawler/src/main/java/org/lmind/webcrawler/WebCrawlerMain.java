@@ -1,6 +1,6 @@
 package org.lmind.webcrawler;
 
-import org.lmind.webcrawler.book.biquge.BiqugeCrawler;
+import org.lmind.webcrawler.book.qidianfree.QidianFreeCrawler;
 import org.springframework.beans.BeansException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -11,7 +11,7 @@ public class WebCrawlerMain {
 		//context.getBean(Mtmju.class).doCrawl();
 		
 		
-		BiqugeCrawler c = context.getBean(BiqugeCrawler.class);
+		QidianFreeCrawler c = context.getBean(QidianFreeCrawler.class);
 		c.run();
 		
 	}
