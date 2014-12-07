@@ -49,6 +49,8 @@
     <property name="waitForTasksToCompleteOnShutdown" value="true"/>
   </bean>
   
+  <bean class="org.lmind.webcrawler.export.TxtExporter"></bean>
+  
   <bean class="org.lmind.webcrawler.dao.BookRepository"></bean>
 
   <bean class="org.lmind.webcrawler.mtmju.Mtmju"></bean>

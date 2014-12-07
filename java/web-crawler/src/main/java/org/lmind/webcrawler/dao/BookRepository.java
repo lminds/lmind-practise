@@ -8,7 +8,7 @@ import javax.persistence.PersistenceContext;
 
 import org.lmind.webcrawler.entity.Book;
 import org.lmind.webcrawler.entity.Chapter;
-import org.lmind.webcrawler.entity.Epside;
+import org.lmind.webcrawler.entity.Episode;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -48,14 +48,14 @@ public class BookRepository {
 		}
 	}
 	
-	public Epside newEpside(Epside epside) {
-		if (entityManager.contains(epside)) {
+	public Episode newEpisode(Episode episode) {
+		if (entityManager.contains(episode)) {
 			throw new RuntimeException("实体已存在");
 		}
 		
-		epside.setId(null);
-		entityManager.persist(epside);
-		return epside;
+		episode.setId(null);
+		entityManager.persist(episode);
+		return episode;
 	}
 	
 	public Chapter newChapter(Chapter chapter) {
@@ -71,7 +71,7 @@ public class BookRepository {
 	public List<Chapter> getRemains(Book book) {
 		return entityManager
 				.createQuery(
-						"select o from Chapter o where o.epside.book.id = ?1 and o.content is null",
+						"select o from Chapter o where o.episode.book.id = ?1 and o.content is null",
 						Chapter.class).setParameter(1, book.getId()).getResultList();
 	}
 	

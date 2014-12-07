@@ -6,7 +6,7 @@
     <!-- Tutorial "unit" -->
     <persistence-unit name="books">
         <class>org.lmind.webcrawler.entity.Book</class>
-        <class>org.lmind.webcrawler.entity.Epside</class>
+        <class>org.lmind.webcrawler.entity.Episode</class>
         <class>org.lmind.webcrawler.entity.Chapter</class>
         <exclude-unlisted-classes/>
         

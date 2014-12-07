@@ -22,7 +22,7 @@ public class Book {
 	private String name;
 	
 	@OneToMany(mappedBy="book")
-	private Set<Epside> epsides;
+	private Set<Episode> episodes;
 
 	public Long getId() {
 		return id;
@@ -40,11 +40,11 @@ public class Book {
 		this.name = name;
 	}
 
-	public Set<Epside> getEpsides() {
-		return epsides;
+	public Set<Episode> getEpisodes() {
+		return episodes;
 	}
 
-	public void setEpsides(Set<Epside> epsides) {
-		this.epsides = epsides;
+	public void setEpisodes(Set<Episode> episodes) {
+		this.episodes = episodes;
 	}
 }

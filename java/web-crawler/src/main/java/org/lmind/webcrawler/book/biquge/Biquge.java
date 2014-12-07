@@ -13,7 +13,7 @@ import org.lmind.webcrawler.CrawlerUtil;
 import org.lmind.webcrawler.dao.BookRepository;
 import org.lmind.webcrawler.entity.Book;
 import org.lmind.webcrawler.entity.Chapter;
-import org.lmind.webcrawler.entity.Epside;
+import org.lmind.webcrawler.entity.Episode;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -80,11 +80,11 @@ public class Biquge {
 		AtomicLong seq = new AtomicLong(1);
 		if (els.size() > 0) {
 			els.forEach(o -> {
-				Epside ep = saveEpside(book, o.text(), seq.incrementAndGet());
+				Episode ep = saveEpisode(book, o.text(), seq.incrementAndGet());
 				saveChapters(ep, o.nextElementSibling());
 			});
 		} else {
-			Epside ep = saveEpside(book, bookName, seq.incrementAndGet());
+			Episode ep = saveEpisode(book, bookName, seq.incrementAndGet());
 			Element dd = doc.select("#list dd").first();
 			saveChapters(ep, dd);
 		}
@@ -92,7 +92,7 @@ public class Biquge {
 		System.out.println("end");
 	}
 
-	private void saveChapters(Epside ep, Element dd) {
+	private void saveChapters(Episode ep, Element dd) {
 		for (long i = 0; i < 10000; i++) {
 			if (dd == null) {
 				break;
@@ -101,7 +101,7 @@ public class Biquge {
 				Elements as = dd.select("a");
 				if (as.size() > 0) {
 					Chapter cp = new Chapter();
-					cp.setEpside(ep);
+					cp.setEpisode(ep);
 					cp.setName(as.first().text());
 					cp.setOrder(i);
 					cp.setReference(as.first().attr("href"));
@@ -115,13 +115,13 @@ public class Biquge {
 		}
 	}
 
-	private Epside saveEpside(Book book, String epsideName, long order) {
+	private Episode saveEpisode(Book book, String episodeName, long order) {
 		
-		Epside epside = new Epside();
-		epside.setName(epsideName);
-		epside.setOrder(order);
-		epside.setBook(book);
-		return bookRepository.newEpside(epside);
+		Episode episode = new Episode();
+		episode.setName(episodeName);
+		episode.setOrder(order);
+		episode.setBook(book);
+		return bookRepository.newEpisode(episode);
 	}
 	
 	private Book createBook(String bookName) {

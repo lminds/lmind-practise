@@ -36,7 +36,7 @@ public class Chapter {
 	
 	@ManyToOne
 	@JoinColumn(name="EPISODE_ID")
-	private Epside epside;
+	private Episode episode;
 
 	public Long getId() {
 		return id;
@@ -70,12 +70,12 @@ public class Chapter {
 		this.reference = reference;
 	}
 
-	public Epside getEpside() {
-		return epside;
+	public Episode getEpisode() {
+		return episode;
 	}
 
-	public void setEpside(Epside epside) {
-		this.epside = epside;
+	public void setEpisode(Episode episode) {
+		this.episode = episode;
 	}
 
 	public String getContent() {

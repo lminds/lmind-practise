@@ -24,7 +24,7 @@ import org.lmind.webcrawler.CrawlerUtil;
 import org.lmind.webcrawler.dao.BookRepository;
 import org.lmind.webcrawler.entity.Book;
 import org.lmind.webcrawler.entity.Chapter;
-import org.lmind.webcrawler.entity.Epside;
+import org.lmind.webcrawler.entity.Episode;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -95,24 +95,24 @@ public class QidianFree {
 		AtomicLong seq = new AtomicLong();
 		doc.select(".tabs").forEach(o -> {
 			
-			Epside epside = new Epside();
-			epside.setName(o.text());
-			epside.setBook(book);
-			epside.setOrder(seq.incrementAndGet());
-			bookRepository.newEpside(epside);
+			Episode episode = new Episode();
+			episode.setName(o.text());
+			episode.setBook(book);
+			episode.setOrder(seq.incrementAndGet());
+			bookRepository.newEpisode(episode);
 			
-			saveChapter(o.nextElementSibling(), epside);
+			saveChapter(o.nextElementSibling(), episode);
 			
 		});
 	}
 
-	private void saveChapter(Element section, Epside epside) {
+	private void saveChapter(Element section, Episode episode) {
 		AtomicLong seq = new AtomicLong();
 		section.select("li a").forEach(link -> {
 			
 			Chapter chapter = new Chapter();
 			chapter.setName(link.text());
-			chapter.setEpside(epside);
+			chapter.setEpisode(episode);
 			chapter.setReference(link.attr("href"));
 			chapter.setOrder(seq.incrementAndGet());
 			bookRepository.newChapter(chapter);

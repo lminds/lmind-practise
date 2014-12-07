@@ -13,7 +13,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="EPISODE")
-public class Epside {
+public class Episode {
 
 	@Id
 	@GeneratedValue
@@ -30,7 +30,7 @@ public class Epside {
 	@Column(name="ORDER_VALUE")
 	private Long order;
 	
-	@OneToMany(mappedBy="epside")
+	@OneToMany(mappedBy="episode")
 	private Set<Chapter> chapters;
 	
 	public Long getId() {

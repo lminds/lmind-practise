@@ -10,7 +10,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 import org.lmind.webcrawler.CrawlerUtil;
 import org.lmind.webcrawler.entity.Book;
-import org.lmind.webcrawler.entity.Epside;
+import org.lmind.webcrawler.entity.Episode;
 
 public class Kan7Crawler {
 	
@@ -28,17 +28,17 @@ public class Kan7Crawler {
 		Book book = new Book();
 		book.setName("奥术神座");
 		
-		ArrayList<Epside> list = new ArrayList<Epside>();
+		ArrayList<Episode> list = new ArrayList<Episode>();
 		els.forEach(o -> {
 			try {
-				Epside epside = new Epside();
+				Episode episode = new Episode();
 				String s2 = o.textNodes().get(0).text();
 				if (s2.endsWith("[")) {
 					String s3 = s2.substring(2, s2.length() - 2);
-					epside.setName(s3);
+					episode.setName(s3);
 				} else {
 					String s3 = s2.substring(1, s2.length() - 1);
-					epside.setName(s3);
+					episode.setName(s3);
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
