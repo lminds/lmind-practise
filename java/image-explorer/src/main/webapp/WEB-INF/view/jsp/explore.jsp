@@ -8,7 +8,7 @@
 <title>${fn:escapeXml(name)}${list[index]}</title>
 </head>
 <body style="overflow: hidden;">
-  <div class="container-fluid" style="position: fixed; background-color: aqua;">
+  <div class="container-fluid" style="position: fixed; background-color: aqua; ">
     <div class="row" style="padding: 5px 5px 5px 5px;">
       <input id="comicName" type="hidden" value="${fn:escapeXml(name)}" />
       <a href="${contextPath}/action/list" style="margin-left: 5px">目录</a>
@@ -23,11 +23,11 @@
     </div>
   </div>
 
-  <div class="container-fluid" style="position: absolute; width: 100%; height: 100%; z-index: -5; overflow: scroll;">
+  <div id="imgBox" class="container-fluid" style="position: absolute; width: 100%; height: 100%; z-index: -5; overflow: scroll;">
     <div>
       <input type="hidden" name="contextPath" value="${contextPath}">
       <input type="hidden" name="item" value="${list[index]}">
-      <img name="${fn:escapeXml(name)}" src="${contextPath}/action/content?name=${fn:escapeXml(x.encodeURIComponent(name))}&item=${list[index]}">
+      <img style="max-width: 200%;" name="${fn:escapeXml(name)}" src="${contextPath}/action/content?name=${fn:escapeXml(x.encodeURIComponent(name))}&item=${list[index]}">
     </div>
   </div>
 </body>

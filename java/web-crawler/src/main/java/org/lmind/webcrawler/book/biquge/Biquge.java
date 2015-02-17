@@ -10,10 +10,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.lmind.webcrawler.CrawlerUtil;
-import org.lmind.webcrawler.dao.BookRepository;
-import org.lmind.webcrawler.entity.Book;
-import org.lmind.webcrawler.entity.Chapter;
-import org.lmind.webcrawler.entity.Episode;
+import org.lmind.webcrawler.book.BookRepository;
+import org.lmind.webcrawler.book.entity.Book;
+import org.lmind.webcrawler.book.entity.Chapter;
+import org.lmind.webcrawler.book.entity.Episode;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional

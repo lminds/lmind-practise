@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
-import org.lmind.webcrawler.entity.Chapter;
+import org.lmind.webcrawler.book.entity.Chapter;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 public class QidianFreeCrawler {

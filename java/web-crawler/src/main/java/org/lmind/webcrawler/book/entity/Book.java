@@ -1,4 +1,4 @@
-package org.lmind.webcrawler.entity;
+package org.lmind.webcrawler.book.entity;
 
 import java.util.Set;
 

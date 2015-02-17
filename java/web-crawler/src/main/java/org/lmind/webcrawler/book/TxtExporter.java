@@ -1,4 +1,4 @@
-package org.lmind.webcrawler.export;
+package org.lmind.webcrawler.book;
 
 import java.io.File;
 
@@ -7,8 +7,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.apache.commons.io.FileUtils;
-import org.lmind.webcrawler.entity.Chapter;
-import org.lmind.webcrawler.entity.Episode;
+import org.jsoup.Jsoup;
+import org.lmind.webcrawler.book.entity.Chapter;
+import org.lmind.webcrawler.book.entity.Episode;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
@@ -39,5 +41,12 @@ public class TxtExporter {
 		});
 		
 		FileUtils.writeStringToFile(file, sb.toString(), "utf-8");
+	}
+	
+	public static void main(String[] args) throws Exception {
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("spring/applicationContext.xml");
+
+		TxtExporter e = context.getBean(TxtExporter.class);
+		e.export("奥术神座", new File("D:\\t.txt"));
 	}
 }

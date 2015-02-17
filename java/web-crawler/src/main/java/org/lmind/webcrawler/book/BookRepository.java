@@ -1,4 +1,4 @@
-package org.lmind.webcrawler.dao;
+package org.lmind.webcrawler.book;
 
 import java.util.List;
 
@@ -6,9 +6,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
-import org.lmind.webcrawler.entity.Book;
-import org.lmind.webcrawler.entity.Chapter;
-import org.lmind.webcrawler.entity.Episode;
+import org.lmind.webcrawler.book.entity.Book;
+import org.lmind.webcrawler.book.entity.Chapter;
+import org.lmind.webcrawler.book.entity.Episode;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional

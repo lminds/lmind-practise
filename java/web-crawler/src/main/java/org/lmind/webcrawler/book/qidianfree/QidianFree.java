@@ -9,7 +9,11 @@ import java.util.concurrent.atomic.AtomicLong;
 
 
 
+
+
 import javax.annotation.Resource;
+
+
 
 
 
@@ -21,21 +25,21 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.lmind.webcrawler.CrawlerUtil;
-import org.lmind.webcrawler.dao.BookRepository;
-import org.lmind.webcrawler.entity.Book;
-import org.lmind.webcrawler.entity.Chapter;
-import org.lmind.webcrawler.entity.Episode;
+import org.lmind.webcrawler.book.BookRepository;
+import org.lmind.webcrawler.book.entity.Book;
+import org.lmind.webcrawler.book.entity.Chapter;
+import org.lmind.webcrawler.book.entity.Episode;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Transactional
 public class QidianFree {
 	
-	private String baseUrl = "http://free.qidian.com/Free/ChapterList.aspx?bookId=22468";
+	private String baseUrl = "http://free.qidian.com/Free/ChapterList.aspx?bookId=149";
 	
 	private String charset = "utf-8";
 	
-	private String bookName = "暴风雨中的蝴蝶";
+	private String bookName = "枪·血玫瑰·Necromancer";
 	
 	@Resource
 	private BookRepository bookRepository;
@@ -69,7 +73,12 @@ public class QidianFree {
 					sb.append(p.text()).append("\n");
 				});
 				
-				bookRepository.updateChapterContent(o, sb.toString());
+				String content = sb.toString();
+				if (content.trim().length() == 0) {
+					System.out.println("内容空:" + o.getName());
+				}
+				
+				bookRepository.updateChapterContent(o, content);
 				System.out.println(o.getName());
 				
 			} catch (Exception e) {

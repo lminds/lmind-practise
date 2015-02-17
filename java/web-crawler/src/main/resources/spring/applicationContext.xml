@@ -49,15 +49,20 @@
     <property name="waitForTasksToCompleteOnShutdown" value="true"/>
   </bean>
   
-  <bean class="org.lmind.webcrawler.export.TxtExporter"></bean>
+  <bean class="org.lmind.webcrawler.core.HttpClientFactoryBean">
+    <property name="socksAddress" value="127.0.0.1"/>
+    <property name="socksPort" value="1080"/>
+  </bean>
   
-  <bean class="org.lmind.webcrawler.dao.BookRepository"></bean>
-
-  <bean class="org.lmind.webcrawler.mtmju.Mtmju"></bean>
+  <bean class="org.lmind.webcrawler.book.TxtExporter"></bean>
+  
+  <bean class="org.lmind.webcrawler.book.BookRepository"></bean>
 
   <bean class="org.lmind.webcrawler.book.biquge.Biquge"></bean>
   <bean class="org.lmind.webcrawler.book.biquge.BiqugeCrawler"></bean>
   
   <bean class="org.lmind.webcrawler.book.qidianfree.QidianFree"></bean>
   <bean class="org.lmind.webcrawler.book.qidianfree.QidianFreeCrawler"></bean>
+  
+  <bean class="org.lmind.webcrawler.comic.Exhentai"></bean>
 </beans>
