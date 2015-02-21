@@ -1,0 +1,12 @@
+@{abc}  // echo abc value
+@@      // echo "@"
+@@{abc} // echo "{abc}"
+@}      // error
+@@}     // echo "@}"
+
+@print<span>@@cool</span>@end  // print "<span>@cool</span>"
+@print@@print{}@@end@end  // print "@print{}@end"
+
+@domain:macro(name1:lm, name2:1+2, name3:3 + "name")
+  nest
+@end

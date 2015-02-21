@@ -1,0 +1,20 @@
+a
+a + b + c + d
+a * b * c
+a + b * c
+(a)
+(a + b)
+(a + b) * z
+!a
+!a + b
+!(a)
+a.b
+a.b.c + d.e
+!a.b.c + d.e * (f + z)
+a[1]
+a[a]
+a[a+b]
+a.p[(a*c)][b*d]
+(a)[1]
+a(1)[1]
+a[1](1)

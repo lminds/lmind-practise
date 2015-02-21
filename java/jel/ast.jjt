@@ -1,0 +1,258 @@
+PARSER_BEGIN(AstParser)
+package org.lmind.jel.core.ast;
+
+/** Simple brace matcher. */
+public class AstParser {
+
+
+}
+
+PARSER_END(AstParser)
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "\r"
+}
+
+TOKEN : /* RESERVED WORDS AND LITERALS */
+{
+  < ABSTRACT: "abstract" >
+| < BOOLEAN: "boolean" >
+| < BREAK: "break" >
+| < BYTE: "byte" >
+| < CASE: "case" >
+| < CATCH: "catch" >
+| < CHAR: "char" >
+| < CLASS: "class" >
+| < CONST: "const" >
+| < CONTINUE: "continue" >
+| < _DEFAULT: "default" >
+| < DO: "do" >
+| < DOUBLE: "double" >
+| < ELSE: "else" >
+| < EXTENDS: "extends" >
+| < FALSE: "false" >
+| < FINAL: "final" >
+| < FINALLY: "finally" >
+| < FLOAT: "float" >
+| < FOR: "for" >
+| < GOTO: "goto" >
+| < IF: "if" >
+| < IMPLEMENTS: "implements" >
+| < IMPORT: "import" >
+| < INSTANCEOF: "instanceof" >
+| < INT: "int" >
+| < INTERFACE: "interface" >
+| < LONG: "long" >
+| < NATIVE: "native" >
+| < NEW: "new" >
+| < NULL: "null" >
+| < PACKAGE: "package">
+| < PRIVATE: "private" >
+| < PROTECTED: "protected" >
+| < PUBLIC: "public" >
+| < RETURN: "return" >
+| < SHORT: "short" >
+| < STATIC: "static" >
+| < SUPER: "super" >
+| < SWITCH: "switch" >
+| < SYNCHRONIZED: "synchronized" >
+| < THIS: "this" >
+| < THROW: "throw" >
+| < THROWS: "throws" >
+| < TRANSIENT: "transient" >
+| < TRUE: "true" >
+| < TRY: "try" >
+| < VOID: "void" >
+| < VOLATILE: "volatile" >
+| < WHILE: "while" >
+}
+
+TOKEN : /* LITERALS */
+{
+  < INTEGER_LITERAL:
+        <DECIMAL_LITERAL> (["l","L"])?
+      | <HEX_LITERAL> (["l","L"])?
+  >
+|
+  < #DECIMAL_LITERAL: ["1"-"9"] (["0"-"9"])* >
+|
+  < #HEX_LITERAL: "0" ["x","X"] (["0"-"9","a"-"f","A"-"F"])+ >
+|
+  < FLOATING_POINT_LITERAL:
+        (["0"-"9"])+ "." (["0"-"9"])* (["f","F","d","D"])?
+      | "." (["0"-"9"])+  (["f","F","d","D"])?
+  >
+|
+  < STRING_LITERAL:
+      "\""
+      (   (~["\"","\\","\n","\r"])
+        | ("\\"
+            ( ["n","t","b","r","f","\\","'","\""]
+            | ["0"-"7"] ( ["0"-"7"] )?
+            | ["0"-"3"] ["0"-"7"] ["0"-"7"]
+			| ["u"] ["0"-"9"] ( ["0"-"9"] )*
+            )
+          )
+      )*
+      "\""
+  >
+}
+
+TOKEN : /* IDENTIFIERS */
+{
+  < IDENTIFIER: <LETTER> (<LETTER>|<DIGIT>)* >
+|
+  < #LETTER:
+      [
+       "\u0024",
+       "\u0041"-"\u005a",
+       "\u005f",
+       "\u0061"-"\u007a"
+      ]
+  >
+|
+  < #DIGIT:
+      [
+       "\u0030"-"\u0039"
+      ]
+  >
+}
+
+void BooleanLiteral() :
+{}
+{
+  "true"
+|
+  "false"
+}
+
+void NullLiteral() :
+{}
+{
+  "null"
+}
+
+void Literal() :
+{}
+{
+  <INTEGER_LITERAL>
+|
+  <FLOATING_POINT_LITERAL>
+|
+  <STRING_LITERAL>
+|
+  BooleanLiteral()
+|
+  NullLiteral()
+}
+
+void Identifier() :
+{}
+{
+  <IDENTIFIER>
+}
+
+
+
+
+/*
+ * Expression syntax follows.
+ */
+
+void Expression() :
+{}
+{
+  AdditiveExpression()
+}
+
+void Term() :
+{}
+{
+  Literal()
+|
+  Identifier()
+}
+
+void AdditiveExpression() :
+{}
+{
+  MultiplicativeExpression() ( ( "+" | "-" ) MultiplicativeExpression())*
+}
+
+void MultiplicativeExpression() :
+{}
+{
+  UnaryExpression() ( ( "*" | "/" | "%" ) UnaryExpression() )*
+}
+
+void UnaryExpression() :
+{}
+{
+  "!" InvocationExpression()
+|
+  InvocationExpression()
+}
+
+void InvocationExpression() :
+{}
+{
+  PrimaryExpression() (
+    LOOKAHEAD(2)(
+	  InvokeExpression() | 
+	  IndexProperty()))*
+}
+
+void IndexProperty() :
+{}
+{
+  "[" Expression() "]"
+}
+
+void InvokeExpression() :
+{}
+{
+  "(" (InvokeParamExpression())* ")"
+}
+
+void InvokeParamExpression() :
+{}
+{
+  Expression()
+}
+
+void PrimaryExpression() :
+{}
+{
+  "(" Expression() ")"
+|
+  Reference()
+|
+  Literal()
+}
+
+// 对象引用
+void Reference() :
+{}
+{
+  MemberAccess()
+}
+
+void MemberAccess() :
+{}
+{
+   Identifier() ("." Identifier() )*
+}
+
+
+
+/** Root production. */
+SimpleNode parser() :
+{}
+{
+  Expression() <EOF>
+  { return jjtThis; }
+}
