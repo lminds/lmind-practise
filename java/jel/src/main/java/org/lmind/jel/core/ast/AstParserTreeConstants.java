@@ -8,18 +8,23 @@ public interface AstParserTreeConstants
   public int JJTLITERAL = 2;
   public int JJTIDENTIFIER = 3;
   public int JJTEXPRESSION = 4;
-  public int JJTTERM = 5;
-  public int JJTADDITIVEEXPRESSION = 6;
-  public int JJTMULTIPLICATIVEEXPRESSION = 7;
-  public int JJTUNARYEXPRESSION = 8;
-  public int JJTINVOCATIONEXPRESSION = 9;
-  public int JJTINDEXPROPERTY = 10;
-  public int JJTINVOKEEXPRESSION = 11;
-  public int JJTINVOKEPARAMEXPRESSION = 12;
-  public int JJTPRIMARYEXPRESSION = 13;
-  public int JJTREFERENCE = 14;
-  public int JJTMEMBERACCESS = 15;
-  public int JJTPARSER = 16;
+  public int JJTTERNARYEXPRESSION = 5;
+  public int JJTCONDITIONALOREXPRESSION = 6;
+  public int JJTCONDITIONALANDEXPRESSION = 7;
+  public int JJTEQUALITYEXPRESSION = 8;
+  public int JJTRELATIONALEXPRESSION = 9;
+  public int JJTADDITIVEEXPRESSION = 10;
+  public int JJTMULTIPLICATIVEEXPRESSION = 11;
+  public int JJTUNARYEXPRESSIONSIGN = 12;
+  public int JJTUNARYEXPRESSIONNOT = 13;
+  public int JJTINVOCATIONEXPRESSION = 14;
+  public int JJTINDEXPROPERTY = 15;
+  public int JJTINVOKEEXPRESSION = 16;
+  public int JJTINVOKEPARAMEXPRESSION = 17;
+  public int JJTPRIMARYEXPRESSION = 18;
+  public int JJTREFERENCE = 19;
+  public int JJTMEMBERACCESS = 20;
+  public int JJTPARSER = 21;
 
 
   public String[] jjtNodeName = {
@@ -28,10 +33,15 @@ public interface AstParserTreeConstants
     "Literal",
     "Identifier",
     "Expression",
-    "Term",
+    "TernaryExpression",
+    "ConditionalOrExpression",
+    "ConditionalAndExpression",
+    "EqualityExpression",
+    "RelationalExpression",
     "AdditiveExpression",
     "MultiplicativeExpression",
-    "UnaryExpression",
+    "UnaryExpressionSign",
+    "UnaryExpressionNot",
     "InvocationExpression",
     "IndexProperty",
     "InvokeExpression",
@@ -42,4 +52,4 @@ public interface AstParserTreeConstants
     "parser",
   };
 }
-/* JavaCC - OriginalChecksum=737aa0a9e0611e5f79ef9fc5092a0ac4 (do not edit this line) */
+/* JavaCC - OriginalChecksum=3c015080dfdb2ca75209719ea8a07088 (do not edit this line) */

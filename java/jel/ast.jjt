@@ -1,3 +1,11 @@
+options {
+  STATIC=false;
+  NODE_PACKAGE="org.lmind.jel.core.ast";
+  NODE_FACTORY="JelNodeFactory";
+  NODE_CLASS="JelNode";
+  BUILD_NODE_FILES=false;
+}
+
 PARSER_BEGIN(AstParser)
 package org.lmind.jel.core.ast;
 
@@ -166,15 +174,37 @@ void Identifier() :
 void Expression() :
 {}
 {
-  AdditiveExpression()
+  TernaryExpression()
 }
 
-void Term() :
+void TernaryExpression() :
 {}
 {
-  Literal()
-|
-  Identifier()
+  ConditionalOrExpression() [ "?" Expression() ":" TernaryExpression() ]
+}
+
+void ConditionalOrExpression() :
+{}
+{
+  ConditionalAndExpression() ( "||" ConditionalAndExpression() )*
+}
+
+void ConditionalAndExpression() :
+{}
+{
+  EqualityExpression() ( "&&" EqualityExpression() )*
+}
+
+void EqualityExpression() :
+{}
+{
+  RelationalExpression() ( ( "==" | "!=" ) RelationalExpression() )*
+}
+
+void RelationalExpression() :
+{}
+{
+  AdditiveExpression() ( ( "<" | ">" | "<=" | ">=" ) AdditiveExpression() )*
 }
 
 void AdditiveExpression() :
@@ -186,13 +216,26 @@ void AdditiveExpression() :
 void MultiplicativeExpression() :
 {}
 {
-  UnaryExpression() ( ( "*" | "/" | "%" ) UnaryExpression() )*
+  UnaryExpressionSign() ( ( "*" | "/" | "%" ) UnaryExpressionSign() )*
 }
 
-void UnaryExpression() :
+void UnaryExpressionSign() :
 {}
 {
-  "!" InvocationExpression()
+  ( "+" | "-" ) UnaryExpressionSign()
+|
+  UnaryExpressionNot()
+}
+
+void UnaryExpressionNot() :
+{
+  Token t;
+}
+{
+  t="!"  UnaryExpressionNot()
+  {
+    jjtThis.setImage(t.image);
+  }
 |
   InvocationExpression()
 }
@@ -215,13 +258,13 @@ void IndexProperty() :
 void InvokeExpression() :
 {}
 {
-  "(" (InvokeParamExpression())* ")"
+  "(" (InvokeParamExpression())? ")"
 }
 
 void InvokeParamExpression() :
 {}
 {
-  Expression()
+  Expression() ( "," Expression() )*
 }
 
 void PrimaryExpression() :
@@ -238,19 +281,19 @@ void PrimaryExpression() :
 void Reference() :
 {}
 {
-  MemberAccess()
+  Identifier() (MemberAccess() )*
 }
 
 void MemberAccess() :
 {}
 {
-   Identifier() ("." Identifier() )*
+   "." Identifier()
 }
 
 
 
 /** Root production. */
-SimpleNode parser() :
+JelNode parser() :
 {}
 {
   Expression() <EOF>

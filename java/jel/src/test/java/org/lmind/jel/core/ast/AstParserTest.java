@@ -7,13 +7,54 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.UnsupportedEncodingException;
+import java.math.BigDecimal;
 import java.util.function.Consumer;
 import java.util.function.Function;
+
 
 
 import org.junit.Test;
 
 public class AstParserTest {
+	
+	/**
+	 * 比较运算符测试
+	 * @throws Exception
+	 */
+	@Test
+	public void testTreeOptimizer() throws Exception {
+		
+		w("/sample.txt", line -> {
+			AstParser parser = new AstParser(line);
+			try {
+				JelNode node = parser.parser();
+				node = new TreeOptimizer().optimize(node);
+				node.dump(">");
+			} catch (ParseException e) {
+				throw new RuntimeException(e);
+			}
+		});
+		
+	}
+	
+	/**
+	 * 比较运算符测试
+	 * @throws Exception
+	 */
+	@Test
+	public void testRelational() throws Exception {
+		
+		w("/relational.txt", line -> {
+			AstParser parser = new AstParser(line);
+			try {
+				JelNode node = parser.parser();
+				node.dump(">");
+			} catch (ParseException e) {
+				throw new RuntimeException(e);
+			}
+		});
+		
+	}
 	
 	
 	@Test
@@ -22,7 +63,7 @@ public class AstParserTest {
 		w("/sample.txt", line -> {
 			AstParser parser = new AstParser(line);
 			try {
-				SimpleNode node = parser.parser();
+				JelNode node = parser.parser();
 				node.dump("");
 			} catch (ParseException e) {
 				throw new RuntimeException(e);
@@ -37,10 +78,11 @@ public class AstParserTest {
 	}
 	
 	private void w(String file, Consumer<Reader> f) throws IOException {
-		try (BufferedReader r = read("/sample.txt")) {
+		try (BufferedReader r = read(file)) {
 			String line = null;
 			int n = 1;
 			while((line = r.readLine()) != null) {
+				System.out.println(">" + file + " line" + n);
 				try {
 					f.accept(new StringReader(line));
 				} catch (Throwable e) {
