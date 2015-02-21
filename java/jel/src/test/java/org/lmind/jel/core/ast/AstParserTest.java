@@ -22,32 +22,12 @@ public class AstParserTest {
 	 * @throws Exception
 	 */
 	@Test
-	public void testTreeOptimizer() throws Exception {
-		
-		w("/sample.txt", line -> {
-			AstParser parser = new AstParser(line);
-			try {
-				JelNode node = parser.parser();
-				node = new TreeOptimizer().optimize(node);
-				node.dump(">");
-			} catch (ParseException e) {
-				throw new RuntimeException(e);
-			}
-		});
-		
-	}
-	
-	/**
-	 * 比较运算符测试
-	 * @throws Exception
-	 */
-	@Test
 	public void testRelational() throws Exception {
 		
 		w("/relational.txt", line -> {
-			AstParser parser = new AstParser(line);
+			Parser parser = new Parser();
 			try {
-				JelNode node = parser.parser();
+				JelNode node = parser.parser(line);
 				node.dump(">");
 			} catch (ParseException e) {
 				throw new RuntimeException(e);
@@ -61,9 +41,9 @@ public class AstParserTest {
 	public void test() throws Exception {
 		
 		w("/sample.txt", line -> {
-			AstParser parser = new AstParser(line);
+			Parser parser = new Parser();
 			try {
-				JelNode node = parser.parser();
+				JelNode node = parser.parser(line);
 				node.dump("");
 			} catch (ParseException e) {
 				throw new RuntimeException(e);

@@ -5,33 +5,36 @@ public interface AstParserTreeConstants
 {
   public int JJTBOOLEANLITERAL = 0;
   public int JJTNULLLITERAL = 1;
-  public int JJTLITERAL = 2;
-  public int JJTIDENTIFIER = 3;
+  public int JJTSTRINGLITERAL = 2;
+  public int JJTNUMBERLITERAL = 3;
   public int JJTVOID = 4;
-  public int JJTTERNARYEXPRESSION = 5;
-  public int JJTCONDITIONALOREXPRESSION = 6;
-  public int JJTCONDITIONALANDEXPRESSION = 7;
-  public int JJTEQUALITYEXPRESSION = 8;
-  public int JJTRELATIONALEXPRESSION = 9;
-  public int JJTADDITIVEEXPRESSION = 10;
-  public int JJTMULTIPLICATIVEEXPRESSION = 11;
-  public int JJTUNARYEXPRESSIONSIGN = 12;
-  public int JJTUNARYEXPRESSIONNOT = 13;
-  public int JJTINVOCATIONEXPRESSION = 14;
-  public int JJTINDEXPROPERTY = 15;
-  public int JJTINVOKEEXPRESSION = 16;
-  public int JJTINVOKEPARAMEXPRESSION = 17;
-  public int JJTREFERENCE = 18;
-  public int JJTMEMBERACCESS = 19;
-  public int JJTPARSER = 20;
+  public int JJTIDENTIFIER = 5;
+  public int JJTEXPRESSION = 6;
+  public int JJTTERNARYEXPRESSION = 7;
+  public int JJTCONDITIONALOREXPRESSION = 8;
+  public int JJTCONDITIONALANDEXPRESSION = 9;
+  public int JJTEQUALITYEXPRESSION = 10;
+  public int JJTRELATIONALEXPRESSION = 11;
+  public int JJTADDITIVEEXPRESSION = 12;
+  public int JJTMULTIPLICATIVEEXPRESSION = 13;
+  public int JJTUNARYEXPRESSIONSIGN = 14;
+  public int JJTUNARYEXPRESSIONNOT = 15;
+  public int JJTINVOCATIONEXPRESSION = 16;
+  public int JJTINDEXPROPERTY = 17;
+  public int JJTINVOKEEXPRESSION = 18;
+  public int JJTINVOKEPARAMEXPRESSION = 19;
+  public int JJTREFERENCE = 20;
+  public int JJTMEMBERACCESS = 21;
 
 
   public String[] jjtNodeName = {
     "BooleanLiteral",
     "NullLiteral",
-    "Literal",
-    "Identifier",
+    "StringLiteral",
+    "NumberLiteral",
     "void",
+    "Identifier",
+    "Expression",
     "TernaryExpression",
     "ConditionalOrExpression",
     "ConditionalAndExpression",
@@ -47,7 +50,6 @@ public interface AstParserTreeConstants
     "InvokeParamExpression",
     "Reference",
     "MemberAccess",
-    "parser",
   };
 }
-/* JavaCC - OriginalChecksum=fb18e6f8d380b1b8cc10f8fcd40aa2e6 (do not edit this line) */
+/* JavaCC - OriginalChecksum=a9801a661ad9b34c800cf66865504e5b (do not edit this line) */

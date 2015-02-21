@@ -133,11 +133,19 @@ TOKEN : /* IDENTIFIERS */
 }
 
 void BooleanLiteral() :
-{}
 {
-  "true"
+  Token t;
+}
+{
+  t="true"
+  {
+    jjtThis.setImage(t.image);
+  }
 |
-  "false"
+  t="false"
+  {
+    jjtThis.setImage(t.image);
+  }
 }
 
 void NullLiteral() :
@@ -146,7 +154,18 @@ void NullLiteral() :
   "null"
 }
 
-void Literal() :
+void StringLiteral() :
+{
+  Token t;
+}
+{
+  t=<STRING_LITERAL>
+  {
+    jjtThis.setImage(t.image);
+  }
+}
+
+void NumberLiteral() :
 {
   Token t;
 }
@@ -160,11 +179,14 @@ void Literal() :
   {
     jjtThis.setImage(t.image);
   }
+}
+
+void Literal() #void :
+{}
+{
+  NumberLiteral()
 |
-  t=<STRING_LITERAL>
-  {
-    jjtThis.setImage(t.image);
-  }
+  StringLiteral()
 |
   BooleanLiteral()
 |
@@ -183,13 +205,19 @@ void Identifier() :
 }
 
 
-
+/** Root production. */
+JelNode Expression() :
+{}
+{
+  ExpressionTerm() <EOF>
+  { return jjtThis; }
+}
 
 /*
  * Expression syntax follows.
  */
 
-void Expression() #void :
+void ExpressionTerm() #void :
 {}
 {
   TernaryExpression()
@@ -198,7 +226,7 @@ void Expression() #void :
 void TernaryExpression() :
 {}
 {
-  ConditionalOrExpression() [ "?" Expression() ":" TernaryExpression() ]
+  ConditionalOrExpression() [ "?" ExpressionTerm() ":" TernaryExpression() ]
 }
 
 void ConditionalOrExpression() :
@@ -299,25 +327,25 @@ void InvocationExpression() :
 void IndexProperty() :
 {}
 {
-  "[" Expression() "]"
+  "[" ExpressionTerm() "]"
 }
 
 void InvokeExpression() :
 {}
 {
-  "(" (Expression() ( "," Expression() )*)? ")"
+  "(" (ExpressionTerm() ( "," ExpressionTerm() )*)? ")"
 }
 
 void InvokeParamExpression() :
 {}
 {
-  Expression() ( "," Expression() )*
+  ExpressionTerm() ( "," ExpressionTerm() )*
 }
 
 void PrimaryExpression() #void :
 {}
 {
-  "(" Expression() ")"
+  "(" ExpressionTerm() ")"
 |
   Reference()
 |
@@ -339,10 +367,4 @@ void MemberAccess() :
 
 
 
-/** Root production. */
-JelNode parser() :
-{}
-{
-  Expression() <EOF>
-  { return jjtThis; }
-}
+
