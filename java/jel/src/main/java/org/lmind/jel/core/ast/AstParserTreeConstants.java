@@ -7,7 +7,7 @@ public interface AstParserTreeConstants
   public int JJTNULLLITERAL = 1;
   public int JJTLITERAL = 2;
   public int JJTIDENTIFIER = 3;
-  public int JJTEXPRESSION = 4;
+  public int JJTVOID = 4;
   public int JJTTERNARYEXPRESSION = 5;
   public int JJTCONDITIONALOREXPRESSION = 6;
   public int JJTCONDITIONALANDEXPRESSION = 7;
@@ -21,10 +21,9 @@ public interface AstParserTreeConstants
   public int JJTINDEXPROPERTY = 15;
   public int JJTINVOKEEXPRESSION = 16;
   public int JJTINVOKEPARAMEXPRESSION = 17;
-  public int JJTPRIMARYEXPRESSION = 18;
-  public int JJTREFERENCE = 19;
-  public int JJTMEMBERACCESS = 20;
-  public int JJTPARSER = 21;
+  public int JJTREFERENCE = 18;
+  public int JJTMEMBERACCESS = 19;
+  public int JJTPARSER = 20;
 
 
   public String[] jjtNodeName = {
@@ -32,7 +31,7 @@ public interface AstParserTreeConstants
     "NullLiteral",
     "Literal",
     "Identifier",
-    "Expression",
+    "void",
     "TernaryExpression",
     "ConditionalOrExpression",
     "ConditionalAndExpression",
@@ -46,10 +45,9 @@ public interface AstParserTreeConstants
     "IndexProperty",
     "InvokeExpression",
     "InvokeParamExpression",
-    "PrimaryExpression",
     "Reference",
     "MemberAccess",
     "parser",
   };
 }
-/* JavaCC - OriginalChecksum=3c015080dfdb2ca75209719ea8a07088 (do not edit this line) */
+/* JavaCC - OriginalChecksum=fb18e6f8d380b1b8cc10f8fcd40aa2e6 (do not edit this line) */

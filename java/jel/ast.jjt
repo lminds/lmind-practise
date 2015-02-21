@@ -1,5 +1,7 @@
 options {
   STATIC=false;
+  MULTI=false;
+  NODE_PREFIX="Jel";
   NODE_PACKAGE="org.lmind.jel.core.ast";
   NODE_FACTORY="JelNodeFactory";
   NODE_CLASS="JelNode";
@@ -145,13 +147,24 @@ void NullLiteral() :
 }
 
 void Literal() :
-{}
 {
-  <INTEGER_LITERAL>
+  Token t;
+}
+{
+  t=<INTEGER_LITERAL>
+  {
+    jjtThis.setImage(t.image);
+  }
 |
-  <FLOATING_POINT_LITERAL>
+  t=<FLOATING_POINT_LITERAL>
+  {
+    jjtThis.setImage(t.image);
+  }
 |
-  <STRING_LITERAL>
+  t=<STRING_LITERAL>
+  {
+    jjtThis.setImage(t.image);
+  }
 |
   BooleanLiteral()
 |
@@ -159,9 +172,14 @@ void Literal() :
 }
 
 void Identifier() :
-{}
 {
-  <IDENTIFIER>
+  Token t;
+}
+{
+  t=<IDENTIFIER>
+  {
+    jjtThis.setImage(t.image);
+  }
 }
 
 
@@ -171,7 +189,7 @@ void Identifier() :
  * Expression syntax follows.
  */
 
-void Expression() :
+void Expression() #void :
 {}
 {
   TernaryExpression()
@@ -202,27 +220,56 @@ void EqualityExpression() :
 }
 
 void RelationalExpression() :
-{}
 {
-  AdditiveExpression() ( ( "<" | ">" | "<=" | ">=" ) AdditiveExpression() )*
+  Token t;
+}
+{
+  AdditiveExpression()
+  (
+    (t="<" | t=">" | t="<=" | t=">=" ) RelationalExpression()
+	{
+	  jjtThis.setImage(t.image);
+	}
+  )?
 }
 
 void AdditiveExpression() :
-{}
 {
-  MultiplicativeExpression() ( ( "+" | "-" ) MultiplicativeExpression())*
+  Token t;
+}
+{
+  MultiplicativeExpression()
+  (
+    ( t="+" | t="-" ) AdditiveExpression()
+	{
+	  jjtThis.setImage(t.image);
+	}
+  )?
 }
 
 void MultiplicativeExpression() :
-{}
 {
-  UnaryExpressionSign() ( ( "*" | "/" | "%" ) UnaryExpressionSign() )*
+  Token t;
+}
+{
+  UnaryExpressionSign()
+  (
+    ( t="*" | t="/" | t="%" ) MultiplicativeExpression()
+	{
+	  jjtThis.setImage(t.image);
+	}
+  )?
 }
 
 void UnaryExpressionSign() :
-{}
 {
-  ( "+" | "-" ) UnaryExpressionSign()
+  Token t;
+}
+{
+  ( t="+" | t="-" ) UnaryExpressionSign()
+  {
+    jjtThis.setImage(t.image);
+  }
 |
   UnaryExpressionNot()
 }
@@ -258,7 +305,7 @@ void IndexProperty() :
 void InvokeExpression() :
 {}
 {
-  "(" (InvokeParamExpression())? ")"
+  "(" (Expression() ( "," Expression() )*)? ")"
 }
 
 void InvokeParamExpression() :
@@ -267,7 +314,7 @@ void InvokeParamExpression() :
   Expression() ( "," Expression() )*
 }
 
-void PrimaryExpression() :
+void PrimaryExpression() #void :
 {}
 {
   "(" Expression() ")"

@@ -154,13 +154,13 @@ private int jjMoveStringLiteralDfa0_0(){
       case 40:
          return jjStopAtPos(0, 81);
       case 41:
-         return jjStopAtPos(0, 82);
+         return jjStopAtPos(0, 83);
       case 42:
          return jjStopAtPos(0, 75);
       case 43:
          return jjStopAtPos(0, 73);
       case 44:
-         return jjStopAtPos(0, 83);
+         return jjStopAtPos(0, 82);
       case 45:
          return jjStopAtPos(0, 74);
       case 46:
@@ -972,7 +972,7 @@ public static final String[] jjstrLiteralImages = {
 "\164\162\165\145", "\164\162\171", "\166\157\151\144", "\166\157\154\141\164\151\154\145", 
 "\167\150\151\154\145", null, null, null, null, null, null, null, null, "\77", "\72", "\174\174", 
 "\46\46", "\75\75", "\41\75", "\74", "\76", "\74\75", "\76\75", "\53", "\55", "\52", 
-"\57", "\45", "\41", "\133", "\135", "\50", "\51", "\54", "\56", };
+"\57", "\45", "\41", "\133", "\135", "\50", "\54", "\51", "\56", };
 protected Token jjFillToken()
 {
    final Token t;
