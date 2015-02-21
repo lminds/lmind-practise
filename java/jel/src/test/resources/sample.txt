@@ -6,6 +6,10 @@ a + b * c
 (a + b)
 (a + b) * z
 !a
+!!a
++a
+-a
+a+-b
 !a + b
 !(a)
 a.b
@@ -18,3 +22,9 @@ a.p[(a*c)][b*d]
 (a)[1]
 a(1)[1]
 a[1](1)
+f(1,2)
+f(1+2, a*b[2], f2(kk))
+a > b
+a ? b : c
+a ? b : c ? d : e
+a ? b ? d : e : c ? f : g
