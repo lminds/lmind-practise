@@ -7,13 +7,13 @@ public class JelNode implements Node {
 	protected int id;
 	protected Object value;
 	protected String image;
-	protected AstParser parser;
+	protected JelParser parser;
 
 	public JelNode(int i) {
 		id = i;
 	}
 
-	public JelNode(AstParser p, int i) {
+	public JelNode(JelParser p, int i) {
 		this(i);
 		parser = p;
 	}
@@ -69,7 +69,7 @@ public class JelNode implements Node {
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(AstParserTreeConstants.jjtNodeName[id]);
+		sb.append(JelParserTreeConstants.jjtNodeName[id]);
 		if (image != null) {
 			sb.append(" = " + image);
 		}

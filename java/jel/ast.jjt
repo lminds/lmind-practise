@@ -8,16 +8,16 @@ options {
   BUILD_NODE_FILES=false;
 }
 
-PARSER_BEGIN(AstParser)
+PARSER_BEGIN(JelParser)
 package org.lmind.jel.core.ast;
 
 /** Simple brace matcher. */
-public class AstParser {
+public class JelParser {
 
 
 }
 
-PARSER_END(AstParser)
+PARSER_END(JelParser)
 
 SKIP :
 {

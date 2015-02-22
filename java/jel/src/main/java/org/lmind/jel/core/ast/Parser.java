@@ -11,7 +11,7 @@ public class Parser {
 
 	public JelNode parser(Reader r) throws ParseException {
 		try {
-			JelNode node = new AstParser(r).Expression();
+			JelNode node = new JelParser(r).Expression();
 			return new TreeOptimizer().optimize(node);
 		} catch (TokenMgrError e) {
 			throw new ParseException(e.getMessage());

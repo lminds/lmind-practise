@@ -1,6 +1,6 @@
 package org.lmind.jel.core.ast;
 
-public class TreeOptimizer implements AstParserTreeConstants {
+public class TreeOptimizer implements JelParserTreeConstants {
 
 	public JelNode optimize(JelNode node) {
 

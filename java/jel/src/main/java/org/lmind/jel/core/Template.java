@@ -1,6 +1,6 @@
 package org.lmind.jel.core;
 
-import org.lmind.jel.core.ast.AstParserTreeConstants;
+import org.lmind.jel.core.ast.JelParserTreeConstants;
 import org.lmind.jel.core.ast.JelNode;
 
 public class Template {
@@ -10,7 +10,7 @@ public class Template {
 	public void run(JelNode node, Context context) {
 
 		switch (node.getId()) {
-		case AstParserTreeConstants.JJTADDITIVEEXPRESSION:
+		case JelParserTreeConstants.JJTADDITIVEEXPRESSION:
 			run((JelNode)node.jjtGetChild(0), context);
 			run((JelNode)node.jjtGetChild(1), context);
 			Object b = context.popStack();
@@ -22,16 +22,21 @@ public class Template {
 			}
 			
 			break;
-		case AstParserTreeConstants.JJTSTRINGLITERAL:
+		case JelParserTreeConstants.JJTREFERENCE:
+			
+			break;
+		case JelParserTreeConstants.JJTMEMBERACCESS:
+			break;
+		case JelParserTreeConstants.JJTSTRINGLITERAL:
 			context.pushStack(node.getImage());
 			break;
-		case AstParserTreeConstants.JJTNUMBERLITERAL:
+		case JelParserTreeConstants.JJTNUMBERLITERAL:
 			context.pushStack(Double.valueOf(node.getImage()));
 			break;
-		case AstParserTreeConstants.JJTBOOLEANLITERAL:
+		case JelParserTreeConstants.JJTBOOLEANLITERAL:
 			context.pushStack(Boolean.valueOf(node.getImage()));
 			break;
-		case AstParserTreeConstants.JJTEXPRESSION:
+		case JelParserTreeConstants.JJTEXPRESSION:
 			run((JelNode)node.jjtGetChild(0), context);
 			break;
 		}

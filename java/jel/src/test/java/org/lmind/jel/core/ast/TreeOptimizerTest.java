@@ -15,7 +15,7 @@ public class TreeOptimizerTest {
 	@Test
 	public void testTreeOptimizer() throws Exception {
 		
-		eval("a + b + c");
+		eval("a.b.c");
 		
 		Template t = new Template();
 		JelNode n = compile("1 + 2.1 - 3");
