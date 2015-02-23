@@ -223,123 +223,117 @@ void ExpressionTerm() #void :
   TernaryExpression()
 }
 
-void TernaryExpression() :
+void TernaryExpression() #void :
 {}
 {
-  ConditionalOrExpression() [ "?" ExpressionTerm() ":" TernaryExpression() ]
+  ConditionalOrExpression() [ "?" ExpressionTerm() ":" TernaryExpression() #TernaryExpression(3) ]
 }
 
-void ConditionalOrExpression() :
+void ConditionalOrExpression() #void :
 {}
 {
-  ConditionalAndExpression() ( "||" ConditionalAndExpression() )*
+  ConditionalAndExpression()
+  (
+    "||" ConditionalAndExpression() #OrExpression(2)
+  )*
 }
 
-void ConditionalAndExpression() :
+void ConditionalAndExpression() #void :
 {}
 {
-  EqualityExpression() ( "&&" EqualityExpression() )*
+  EqualityExpression()
+  (
+    "&&" EqualityExpression() #AndExpression(2)
+  )*
 }
 
-void EqualityExpression() :
+void EqualityExpression() #void :
 {}
 {
-  RelationalExpression() ( ( "==" | "!=" ) RelationalExpression() )*
+  RelationalExpression()
+  (
+    "==" RelationalExpression() #EqualsExpression(2)
+	|
+	"!=" RelationalExpression() #NotEqualsExpression(2)
+  )*
 }
 
-void RelationalExpression() :
-{
-  Token t;
-}
+void RelationalExpression() #void :
+{}
 {
   AdditiveExpression()
   (
-    (t="<" | t=">" | t="<=" | t=">=" ) RelationalExpression()
-	{
-	  jjtThis.setImage(t.image);
-	}
-  )?
+    "<" AdditiveExpression() #LesserExpression(2)
+	|
+	">" AdditiveExpression() #GreaterExpression(2)
+	|
+	"<=" AdditiveExpression() #LesserEqualsExpression(2)
+	|
+	">=" AdditiveExpression() #GreaterEqualsExpression(2)
+  )*
 }
 
-void AdditiveExpression() :
-{
-  Token t;
-}
+void AdditiveExpression() #void :
+{}
 {
   MultiplicativeExpression()
   (
-    ( t="+" | t="-" ) AdditiveExpression()
-	{
-	  jjtThis.setImage(t.image);
-	}
-  )?
+    "+" MultiplicativeExpression() #AddExpression(2)
+	|
+	"-" MultiplicativeExpression() #SubExpression(2)
+  )*
 }
 
-void MultiplicativeExpression() :
+void MultiplicativeExpression() #void :
+{}
 {
-  Token t;
-}
-{
-  UnaryExpressionSign()
+  NegateExpression()
   (
-    ( t="*" | t="/" | t="%" ) MultiplicativeExpression()
-	{
-	  jjtThis.setImage(t.image);
-	}
-  )?
+     "*" NegateExpression() #MultiplyExpression(2)
+	 | 
+	 "/" NegateExpression() #DivisionExpression(2)
+	 | 
+	 "%" NegateExpression() #ModExpression(2)
+  )*
 }
 
-void UnaryExpressionSign() :
+void NegateExpression() #void :
+{}
 {
-  Token t;
-}
-{
-  ( t="+" | t="-" ) UnaryExpressionSign()
-  {
-    jjtThis.setImage(t.image);
-  }
-|
+  "+" NegateExpression()
+  | 
+  "-" NegateExpression()  #NegateExpression 
+  |
   UnaryExpressionNot()
 }
 
-void UnaryExpressionNot() :
+void UnaryExpressionNot() #void :
+{}
 {
-  Token t;
-}
-{
-  t="!"  UnaryExpressionNot()
-  {
-    jjtThis.setImage(t.image);
-  }
+  "!"  UnaryExpressionNot() #UnaryExpressionNot(1)
 |
   InvocationExpression()
 }
 
-void InvocationExpression() :
-{}
+void InvocationExpression() #void :
 {
-  PrimaryExpression() (
-    LOOKAHEAD(2)(
-	  InvokeExpression() | 
-	  IndexProperty()))*
+  Token t;
+}
+{
+  PrimaryExpression()
+  (
+    "." Identifier() #PropertyReadExpression(2)
+	|
+	"[" ExpressionTerm() "]" #IndexPropertyReadExpression(2)
+	|
+	"(" (CallParametersExpression()) ")" #CallExpression(2)
+  )*
 }
 
-void IndexProperty() :
+void CallParametersExpression() :
 {}
 {
-  "[" ExpressionTerm() "]"
-}
-
-void InvokeExpression() :
-{}
-{
-  "(" (ExpressionTerm() ( "," ExpressionTerm() )*)? ")"
-}
-
-void InvokeParamExpression() :
-{}
-{
-  ExpressionTerm() ( "," ExpressionTerm() )*
+  (ExpressionTerm() ( "," ExpressionTerm() )*)?
 }
 
 void PrimaryExpression() #void :
@@ -354,17 +348,15 @@ void PrimaryExpression() #void :
 
 // 对象引用
 void Reference() :
-{}
 {
-  Identifier() (MemberAccess() )*
+  Token t;
 }
-
-void MemberAccess() :
-{}
 {
-   "." Identifier()
+  t=<IDENTIFIER>
+  {
+    jjtThis.setImage(t.image);
+  }
 }
-
 
 
 

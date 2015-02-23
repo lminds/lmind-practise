@@ -11,20 +11,26 @@ public interface JelParserTreeConstants
   public int JJTIDENTIFIER = 5;
   public int JJTEXPRESSION = 6;
   public int JJTTERNARYEXPRESSION = 7;
-  public int JJTCONDITIONALOREXPRESSION = 8;
-  public int JJTCONDITIONALANDEXPRESSION = 9;
-  public int JJTEQUALITYEXPRESSION = 10;
-  public int JJTRELATIONALEXPRESSION = 11;
-  public int JJTADDITIVEEXPRESSION = 12;
-  public int JJTMULTIPLICATIVEEXPRESSION = 13;
-  public int JJTUNARYEXPRESSIONSIGN = 14;
-  public int JJTUNARYEXPRESSIONNOT = 15;
-  public int JJTINVOCATIONEXPRESSION = 16;
-  public int JJTINDEXPROPERTY = 17;
-  public int JJTINVOKEEXPRESSION = 18;
-  public int JJTINVOKEPARAMEXPRESSION = 19;
-  public int JJTREFERENCE = 20;
-  public int JJTMEMBERACCESS = 21;
+  public int JJTOREXPRESSION = 8;
+  public int JJTANDEXPRESSION = 9;
+  public int JJTEQUALSEXPRESSION = 10;
+  public int JJTNOTEQUALSEXPRESSION = 11;
+  public int JJTLESSEREXPRESSION = 12;
+  public int JJTGREATEREXPRESSION = 13;
+  public int JJTLESSEREQUALSEXPRESSION = 14;
+  public int JJTGREATEREQUALSEXPRESSION = 15;
+  public int JJTADDEXPRESSION = 16;
+  public int JJTSUBEXPRESSION = 17;
+  public int JJTMULTIPLYEXPRESSION = 18;
+  public int JJTDIVISIONEXPRESSION = 19;
+  public int JJTMODEXPRESSION = 20;
+  public int JJTNEGATEEXPRESSION = 21;
+  public int JJTUNARYEXPRESSIONNOT = 22;
+  public int JJTPROPERTYREADEXPRESSION = 23;
+  public int JJTINDEXPROPERTYREADEXPRESSION = 24;
+  public int JJTCALLEXPRESSION = 25;
+  public int JJTCALLPARAMETERSEXPRESSION = 26;
+  public int JJTREFERENCE = 27;
 
 
   public String[] jjtNodeName = {
@@ -36,20 +42,26 @@ public interface JelParserTreeConstants
     "Identifier",
     "Expression",
     "TernaryExpression",
-    "ConditionalOrExpression",
-    "ConditionalAndExpression",
-    "EqualityExpression",
-    "RelationalExpression",
-    "AdditiveExpression",
-    "MultiplicativeExpression",
-    "UnaryExpressionSign",
+    "OrExpression",
+    "AndExpression",
+    "EqualsExpression",
+    "NotEqualsExpression",
+    "LesserExpression",
+    "GreaterExpression",
+    "LesserEqualsExpression",
+    "GreaterEqualsExpression",
+    "AddExpression",
+    "SubExpression",
+    "MultiplyExpression",
+    "DivisionExpression",
+    "ModExpression",
+    "NegateExpression",
     "UnaryExpressionNot",
-    "InvocationExpression",
-    "IndexProperty",
-    "InvokeExpression",
-    "InvokeParamExpression",
+    "PropertyReadExpression",
+    "IndexPropertyReadExpression",
+    "CallExpression",
+    "CallParametersExpression",
     "Reference",
-    "MemberAccess",
   };
 }
-/* JavaCC - OriginalChecksum=e3d7b3103dcfa8c8d886732a9594bad3 (do not edit this line) */
+/* JavaCC - OriginalChecksum=613d05c94d712e740c086a83451f86c0 (do not edit this line) */

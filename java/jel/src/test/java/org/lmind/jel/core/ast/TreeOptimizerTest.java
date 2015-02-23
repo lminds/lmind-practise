@@ -1,10 +1,11 @@
 package org.lmind.jel.core.ast;
 
-import java.io.StringReader;
+import javax.script.SimpleScriptContext;
 
 import org.junit.Test;
-import org.lmind.jel.core.Context;
-import org.lmind.jel.core.Template;
+import org.lmind.jel.core.JelEngine;
+import org.lmind.jel.core.JelObject;
+import org.lmind.jel.core.util.SimpleJelObject;
 
 public class TreeOptimizerTest {
 	
@@ -15,13 +16,15 @@ public class TreeOptimizerTest {
 	@Test
 	public void testTreeOptimizer() throws Exception {
 		
-		eval("a.b.c");
+//		eval("(a + b).b.c");
 		
-		Template t = new Template();
-		JelNode n = compile("1 + 2.1 - 3");
-		Context context = new Context();
-		t.run(n, context);
-		Object r = context.popStack();
+		String s = "a.name() ? 2 : a.b";
+		eval(s);
+		
+		JelEngine engine = new JelEngine();
+		SimpleScriptContext context = new SimpleScriptContext();
+		context.setAttribute("a", new SimpleJelObject(new B()), SimpleScriptContext.ENGINE_SCOPE);
+		JelObject r = engine.evalute(s, context);
 		System.out.println(r);
 	}
 	
@@ -33,5 +36,19 @@ public class TreeOptimizerTest {
 	private void eval(String s) throws Exception {
 		JelNode node = compile(s);
 		node.dump(">");
+	}
+	
+	public static class B {
+		
+		private String b = "hello world";
+
+		public String getB() {
+			return b;
+		}
+		
+		public String name() {
+			return b;
+		}
+		
 	}
 }
