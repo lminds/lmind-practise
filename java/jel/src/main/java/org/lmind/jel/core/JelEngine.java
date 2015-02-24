@@ -23,11 +23,15 @@ public class JelEngine {
 		this.objectFactory = objectFactory;
 	}
 
-	public JelObject evalute(String code, ScriptContext context) {
-		return evalute(new StringReader(code), context);
+	public JelObject eval(String script, ScriptContext context) {
+		return eval(new StringReader(script), context);
 	}
 
-	public JelObject evalute(Reader reader, ScriptContext context) {
+	public JelObject eval(Reader reader, ScriptContext context) {
+		return compile(reader).eval(context);
+	}
+	
+	public JelExpression compile(Reader reader) {
 		Parser p = new Parser();
 		JelNode node;
 		try {
@@ -35,14 +39,14 @@ public class JelEngine {
 		} catch (ParseException e) {
 			throw new ExpressionException(e);
 		}
-		return evalute(node, context);
+		return new JelExpressionImpl(this, node);
 	}
 
-	private JelObject evalute(JelNode node, ScriptContext context) {
+	JelObject evalNode(JelNode node, ScriptContext context) {
 
 		switch (node.getId()) {
 		case JelParserTreeConstants.JJTEXPRESSION:
-			return evalute((JelNode) node.jjtGetChild(0), context);
+			return evalNode((JelNode) node.jjtGetChild(0), context);
 		case JelParserTreeConstants.JJTTERNARYEXPRESSION:
 			return ternary(node, context);
 
@@ -92,7 +96,7 @@ public class JelEngine {
 
 			// 常量
 		case JelParserTreeConstants.JJTSTRINGLITERAL:
-			return objectFactory.stringValue(node.getImage());
+			return string(node, context);
 		case JelParserTreeConstants.JJTNUMBERLITERAL:
 			return objectFactory.numberValue(Double.valueOf(node.getImage()));
 		case JelParserTreeConstants.JJTBOOLEANLITERAL:
@@ -104,17 +108,17 @@ public class JelEngine {
 	}
 	
 	private JelObject ternary(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		if (condition(a)) {
-			return evalute((JelNode) node.jjtGetChild(1), context);
+			return evalNode((JelNode) node.jjtGetChild(1), context);
 		} else {
-			return evalute((JelNode) node.jjtGetChild(2), context);
+			return evalNode((JelNode) node.jjtGetChild(2), context);
 		}
 	}
 
 	private JelObject add(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
-		JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 
 		if (a instanceof JelNumber) {
 			if (b instanceof JelNumber) {
@@ -134,7 +138,7 @@ public class JelEngine {
 	}
 
 	private JelObject negate(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 
 		if (a instanceof JelNumber) {
 			return objectFactory.numberValue(-((JelNumber) a).doubleValue());
@@ -143,8 +147,8 @@ public class JelEngine {
 	}
 
 	private JelObject subtract(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
-		JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 
 		if (a instanceof JelNumber) {
 			if (b instanceof JelNumber) {
@@ -156,8 +160,8 @@ public class JelEngine {
 	}
 
 	private JelObject multiply(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
-		JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 
 		if (a instanceof JelNumber) {
 			if (b instanceof JelNumber) {
@@ -169,8 +173,8 @@ public class JelEngine {
 	}
 
 	private JelObject division(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
-		JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 
 		if (a instanceof JelNumber) {
 			if (b instanceof JelNumber) {
@@ -182,8 +186,8 @@ public class JelEngine {
 	}
 
 	private JelObject equals(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
-		JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 
 		boolean eq = false;
 		if (a == b) {
@@ -227,9 +231,9 @@ public class JelEngine {
 	}
 
 	private JelObject and(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		if (condition(a)) {
-			JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+			JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 			if (condition(b)) {
 				return objectFactory.booleanValue(true);
 			}
@@ -239,9 +243,9 @@ public class JelEngine {
 	}
 
 	private JelObject or(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		if (!condition(a)) {
-			JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+			JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 			if (!condition(b)) {
 				return objectFactory.booleanValue(false);
 			}
@@ -260,12 +264,12 @@ public class JelEngine {
 	}
 
 	private JelObject propertyRead(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		return a.propertyRead(((JelNode) node.jjtGetChild(1)).getImage());
 	}
 
 	private JelObject call(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		if (!(a instanceof JelCallable)) {
 			throw new ExpressionException("object is not callable");
 		}
@@ -275,11 +279,16 @@ public class JelEngine {
 		int c = node.jjtGetChild(1).jjtGetNumChildren();
 		JelObject[] args = new JelObject[c];
 		for (int i = 0; i < c; i++) {
-			args[i] = evalute((JelNode) node.jjtGetChild(1).jjtGetChild(i),
+			args[i] = evalNode((JelNode) node.jjtGetChild(1).jjtGetChild(i),
 					context);
 		}
 		return call.call(args);
 	}
+	
+	private JelObject string(JelNode node, ScriptContext context) {
+		return objectFactory.stringValue(JelUtils.unescape(node.getImage()));
+	}
+
 	
 	private boolean condition(JelObject a) {
 		boolean r = false;
@@ -294,8 +303,8 @@ public class JelEngine {
 	}
 
 	private int compare(JelNode node, ScriptContext context) {
-		JelObject a = evalute((JelNode) node.jjtGetChild(0), context);
-		JelObject b = evalute((JelNode) node.jjtGetChild(1), context);
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
 
 		int r = 0;
 		if (a instanceof JelNumber) {
