@@ -1,0 +1,15 @@
+@(abc)  // echo abc value
+@@      // echo "@"
+@@(abc) // echo "(abc)"
+@)      // error
+@@)     // echo "@)"
+
+@print(){<span>@@cool</span>}  // print "<span>@cool</span>"
+@print(){@@print{}}  // print "@print{}"
+
+@domain:macro(name1:lm, name2:1+2, name3:3 + "name") {
+  @(arg0)
+  @domain:nestmacro(){}
+}
+
+
