@@ -60,9 +60,9 @@ public class JelEngine {
 		case JelParserTreeConstants.JJTMULTIPLYEXPRESSION:
 			return multiply(node, context);
 		case JelParserTreeConstants.JJTDIVISIONEXPRESSION:
-			return multiply(node, context);
-		case JelParserTreeConstants.JJTMODEXPRESSION:
 			return division(node, context);
+		case JelParserTreeConstants.JJTMODEXPRESSION:
+			return mod(node, context);
 			// 算术运算符 end
 
 			// 关系运算符
@@ -85,7 +85,10 @@ public class JelEngine {
 			return and(node, context);
 		case JelParserTreeConstants.JJTOREXPRESSION:
 			return or(node, context);
+		case JelParserTreeConstants.JJTUNARYEXPRESSIONNOT:
+			return not(node, context);
 			// 逻辑运算符 end
+
 
 		case JelParserTreeConstants.JJTREFERENCE:
 			return reference(node, context);
@@ -185,6 +188,19 @@ public class JelEngine {
 		throw new ExpressionException("\"/\" unsupported ");
 	}
 
+	private JelObject mod(JelNode node, ScriptContext context) {
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
+
+		if (a instanceof JelNumber) {
+			if (b instanceof JelNumber) {
+				return objectFactory.numberValue(((JelNumber) a).doubleValue()
+						% ((JelNumber) b).doubleValue());
+			}
+		}
+		throw new ExpressionException("\"/\" unsupported ");
+	}
+
 	private JelObject equals(JelNode node, ScriptContext context) {
 		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		JelObject b = evalNode((JelNode) node.jjtGetChild(1), context);
@@ -211,7 +227,7 @@ public class JelEngine {
 
 	private JelObject notEquals(JelNode node, ScriptContext context) {
 		JelObject r = equals(node, context);
-		return objectFactory.booleanValue(((JelBoolean) r).value());
+		return objectFactory.booleanValue(!((JelBoolean) r).value());
 	}
 
 	private JelObject lesser(JelNode node, ScriptContext context) {
@@ -252,6 +268,11 @@ public class JelEngine {
 		}
 		
 		return objectFactory.booleanValue(true);
+	}
+
+	private JelObject not(JelNode node, ScriptContext context) {
+		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
+		return objectFactory.booleanValue(!condition(a));
 	}
 	
 	private JelObject reference(JelNode node, ScriptContext context) {
