@@ -18,13 +18,13 @@ public class TreeOptimizerTest {
 		
 //		eval("(a + b).b.c");
 		
-		String s = "a.name() ? 2 : a.b";
+		String s = "a.name() ? a.name() : \"null\"";
 		eval(s);
 		
 		JelEngine engine = new JelEngine();
 		SimpleScriptContext context = new SimpleScriptContext();
 		context.setAttribute("a", new SimpleJelObject(new B()), SimpleScriptContext.ENGINE_SCOPE);
-		JelObject r = engine.evalute(s, context);
+		JelObject r = engine.eval(s, context);
 		System.out.println(r);
 	}
 	
@@ -40,7 +40,7 @@ public class TreeOptimizerTest {
 	
 	public static class B {
 		
-		private String b = "hello world";
+		private String b = "hello world!!!";
 
 		public String getB() {
 			return b;

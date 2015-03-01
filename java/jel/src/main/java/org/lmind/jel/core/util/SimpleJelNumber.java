@@ -13,6 +13,9 @@ public class SimpleJelNumber implements JelNumber {
 
 	@Override
 	public String toString() {
+		if (Math.round(value) == value) {
+			return Long.valueOf((long)value).toString();
+		}
 		return String.valueOf(value);
 	}
 

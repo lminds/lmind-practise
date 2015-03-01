@@ -15,6 +15,7 @@ public class Parser {
 //			return new TreeOptimizer().optimize(node);
 			return node;
 		} catch (TokenMgrError e) {
+			e.printStackTrace();
 			throw new ParseException(e.getMessage());
 		}
 	}
