@@ -16,6 +16,7 @@ a+-b
 !a + b
 !(a)
 a.b
+"z".b
 a.b.c + d.e
 !a.b.c + d.e * (f + z)
 a[1]

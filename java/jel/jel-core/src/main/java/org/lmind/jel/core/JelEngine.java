@@ -30,7 +30,7 @@ public class JelEngine {
 	public JelObject eval(Reader reader, ScriptContext context) {
 		return compile(reader).eval(context);
 	}
-	
+
 	public JelExpression compile(Reader reader) {
 		Parser p = new Parser();
 		JelNode node;
@@ -89,7 +89,6 @@ public class JelEngine {
 			return not(node, context);
 			// 逻辑运算符 end
 
-
 		case JelParserTreeConstants.JJTREFERENCE:
 			return reference(node, context);
 		case JelParserTreeConstants.JJTPROPERTYREADEXPRESSION:
@@ -109,7 +108,7 @@ public class JelEngine {
 
 		return null;
 	}
-	
+
 	private JelObject ternary(JelNode node, ScriptContext context) {
 		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		if (condition(a)) {
@@ -254,7 +253,7 @@ public class JelEngine {
 				return objectFactory.booleanValue(true);
 			}
 		}
-		
+
 		return objectFactory.booleanValue(false);
 	}
 
@@ -266,7 +265,7 @@ public class JelEngine {
 				return objectFactory.booleanValue(false);
 			}
 		}
-		
+
 		return objectFactory.booleanValue(true);
 	}
 
@@ -274,7 +273,7 @@ public class JelEngine {
 		JelObject a = evalNode((JelNode) node.jjtGetChild(0), context);
 		return objectFactory.booleanValue(!condition(a));
 	}
-	
+
 	private JelObject reference(JelNode node, ScriptContext context) {
 		JelObject obj = (JelObject) context.getAttribute(node.getImage());
 		if (obj == null) {
@@ -305,20 +304,20 @@ public class JelEngine {
 		}
 		return call.call(args);
 	}
-	
+
 	private JelObject string(JelNode node, ScriptContext context) {
-		return objectFactory.stringValue(JelUtils.unescape(node.getImage()));
+		return objectFactory.stringValue(JelUtils.unescape(node.getImage()
+				.substring(1, node.getImage().length() - 1)));
 	}
 
-	
 	private boolean condition(JelObject a) {
 		boolean r = false;
 		if (a instanceof JelNumber) {
-			r = ((JelNumber)a).doubleValue() != 0;
+			r = ((JelNumber) a).doubleValue() != 0;
 		} else if (a instanceof JelString) {
 			r = a.toString().length() > 0;
 		} else if (a instanceof JelBoolean) {
-			r = ((JelBoolean)a).value();
+			r = ((JelBoolean) a).value();
 		}
 		return r;
 	}

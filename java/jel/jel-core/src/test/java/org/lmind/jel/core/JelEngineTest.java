@@ -11,6 +11,7 @@ import javax.script.ScriptContext;
 import javax.script.SimpleScriptContext;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
 import org.junit.Test;
 import org.lmind.jel.core.ast.AstParserTest;
 import org.lmind.jel.core.ast.Func;
@@ -24,6 +25,11 @@ public class JelEngineTest {
 		exec("/integer-calculation-case.txt", null);
 		exec("/ternary-case.txt", null);
 		exec("/equality-case.txt", null);
+	}
+	
+	@Test
+	public void literalTest() throws Exception {
+		Assert.assertEquals("中", eval("\"\\u20013\"").toString());
 	}
 	
 	private BufferedReader read(String file) {
