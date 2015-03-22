@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.charset.Charset;
+import java.util.Enumeration;
 import java.util.Iterator;
 
 import javax.script.ScriptContext;
@@ -30,6 +31,14 @@ public class JelEngineTest {
 	@Test
 	public void literalTest() throws Exception {
 		Assert.assertEquals("中", eval("\"\\u20013\"").toString());
+		
+		JelSet s = (JelSet)eval("[1,2,3]");
+		Enumeration<String> keys = s.getKeys();
+		while (keys.hasMoreElements()) {
+			String key = keys.nextElement();
+			JelObject value = s.getProperty(key);
+			System.out.println(value);
+		}
 	}
 	
 	private BufferedReader read(String file) {

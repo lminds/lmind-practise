@@ -20,7 +20,7 @@ public class SimpleJelNumber implements JelNumber {
 	}
 
 	@Override
-	public JelObject propertyRead(String name) {
+	public JelObject getProperty(String name) {
 		return null;
 	}
 

@@ -218,7 +218,28 @@ JelNode Expression() :
 void ExpressionTerm() #void :
 {}
 {
+  SetExpression()
+  |
   TernaryExpression()
+}
+
+void SetExpression() :
+{}
+{
+  "[" SetItemExpression() ("," SetItemExpression())* "]"
+}
+
+void SetItemExpression() :
+{}
+{
+  (
+    LOOKAHEAD(2)
+    (
+      Identifier()
+      |
+      StringLiteral()
+    ) ":"
+  )? ExpressionTerm()
 }
 
 void TernaryExpression() #void :
@@ -309,7 +330,7 @@ void UnaryExpressionNot() #void :
 {}
 {
   "!"  UnaryExpressionNot() #UnaryExpressionNot(1)
-|
+  |
   InvocationExpression()
 }
 

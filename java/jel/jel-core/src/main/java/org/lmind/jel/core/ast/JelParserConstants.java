@@ -195,8 +195,11 @@ public interface JelParserConstants {
     "<IDENTIFIER>",
     "<LETTER>",
     "<DIGIT>",
-    "\"?\"",
+    "\"[\"",
+    "\",\"",
+    "\"]\"",
     "\":\"",
+    "\"?\"",
     "\"||\"",
     "\"&&\"",
     "\"==\"",
@@ -212,11 +215,8 @@ public interface JelParserConstants {
     "\"%\"",
     "\"!\"",
     "\".\"",
-    "\"[\"",
-    "\"]\"",
     "\"(\"",
     "\")\"",
-    "\",\"",
   };
 
 }

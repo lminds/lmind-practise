@@ -21,7 +21,7 @@ public class SimpleJelObject implements JelObject {
 	}
 
 	@Override
-	public JelObject propertyRead(String name) {
+	public JelObject getProperty(String name) {
 		
 		try {
 			BeanInfo info = Introspector.getBeanInfo(value.getClass());

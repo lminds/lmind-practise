@@ -10,27 +10,29 @@ public interface JelParserTreeConstants
   public int JJTVOID = 4;
   public int JJTIDENTIFIER = 5;
   public int JJTEXPRESSION = 6;
-  public int JJTTERNARYEXPRESSION = 7;
-  public int JJTOREXPRESSION = 8;
-  public int JJTANDEXPRESSION = 9;
-  public int JJTEQUALSEXPRESSION = 10;
-  public int JJTNOTEQUALSEXPRESSION = 11;
-  public int JJTLESSEREXPRESSION = 12;
-  public int JJTGREATEREXPRESSION = 13;
-  public int JJTLESSEREQUALSEXPRESSION = 14;
-  public int JJTGREATEREQUALSEXPRESSION = 15;
-  public int JJTADDEXPRESSION = 16;
-  public int JJTSUBEXPRESSION = 17;
-  public int JJTMULTIPLYEXPRESSION = 18;
-  public int JJTDIVISIONEXPRESSION = 19;
-  public int JJTMODEXPRESSION = 20;
-  public int JJTNEGATEEXPRESSION = 21;
-  public int JJTUNARYEXPRESSIONNOT = 22;
-  public int JJTPROPERTYREADEXPRESSION = 23;
-  public int JJTINDEXPROPERTYREADEXPRESSION = 24;
-  public int JJTCALLEXPRESSION = 25;
-  public int JJTCALLPARAMETERSEXPRESSION = 26;
-  public int JJTREFERENCE = 27;
+  public int JJTSETEXPRESSION = 7;
+  public int JJTSETITEMEXPRESSION = 8;
+  public int JJTTERNARYEXPRESSION = 9;
+  public int JJTOREXPRESSION = 10;
+  public int JJTANDEXPRESSION = 11;
+  public int JJTEQUALSEXPRESSION = 12;
+  public int JJTNOTEQUALSEXPRESSION = 13;
+  public int JJTLESSEREXPRESSION = 14;
+  public int JJTGREATEREXPRESSION = 15;
+  public int JJTLESSEREQUALSEXPRESSION = 16;
+  public int JJTGREATEREQUALSEXPRESSION = 17;
+  public int JJTADDEXPRESSION = 18;
+  public int JJTSUBEXPRESSION = 19;
+  public int JJTMULTIPLYEXPRESSION = 20;
+  public int JJTDIVISIONEXPRESSION = 21;
+  public int JJTMODEXPRESSION = 22;
+  public int JJTNEGATEEXPRESSION = 23;
+  public int JJTUNARYEXPRESSIONNOT = 24;
+  public int JJTPROPERTYREADEXPRESSION = 25;
+  public int JJTINDEXPROPERTYREADEXPRESSION = 26;
+  public int JJTCALLEXPRESSION = 27;
+  public int JJTCALLPARAMETERSEXPRESSION = 28;
+  public int JJTREFERENCE = 29;
 
 
   public String[] jjtNodeName = {
@@ -41,6 +43,8 @@ public interface JelParserTreeConstants
     "void",
     "Identifier",
     "Expression",
+    "SetExpression",
+    "SetItemExpression",
     "TernaryExpression",
     "OrExpression",
     "AndExpression",
@@ -64,4 +68,4 @@ public interface JelParserTreeConstants
     "Reference",
   };
 }
-/* JavaCC - OriginalChecksum=613d05c94d712e740c086a83451f86c0 (do not edit this line) */
+/* JavaCC - OriginalChecksum=4cbfdc3b4b9db13dd27019e72dd523f1 (do not edit this line) */

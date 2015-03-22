@@ -1,10 +1,14 @@
 package org.lmind.jel.core;
 
+import java.util.Map;
+
 public interface JelObjectFactory {
 
-	JelNumber numberValue(double v);
+	JelNumber createNumber(double v);
 	
-	JelString stringValue(String s);
+	JelString createString(String s);
 	
-	JelBoolean booleanValue(boolean b);
+	JelBoolean createBoolean(boolean b);
+	
+	JelSet createSet(Map<String, JelObject> v);
 }

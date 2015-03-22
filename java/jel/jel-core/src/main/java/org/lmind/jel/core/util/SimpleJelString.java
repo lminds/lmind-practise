@@ -17,7 +17,7 @@ public class SimpleJelString implements JelString {
 	}
 
 	@Override
-	public JelObject propertyRead(String name) {
+	public JelObject getProperty(String name) {
 		return null;
 	}
 

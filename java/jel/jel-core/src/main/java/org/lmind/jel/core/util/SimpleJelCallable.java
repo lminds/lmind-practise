@@ -20,7 +20,7 @@ public class SimpleJelCallable implements JelCallable {
 	}
 
 	@Override
-	public JelObject propertyRead(String name) {
+	public JelObject getProperty(String name) {
 		return null;
 	}
 
