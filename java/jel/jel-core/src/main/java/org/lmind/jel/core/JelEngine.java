@@ -101,9 +101,10 @@ public class JelEngine {
 		case JelParserTreeConstants.JJTSTRINGLITERAL:
 			return string(node, context);
 		case JelParserTreeConstants.JJTNUMBERLITERAL:
-			return objectFactory.createNumber(Double.valueOf(node.getImage()));
+			return number(node, context);
 		case JelParserTreeConstants.JJTBOOLEANLITERAL:
-			return objectFactory.createBoolean(Boolean.valueOf(node.getImage()));
+			return objectFactory
+					.createBoolean(Boolean.valueOf(node.getImage()));
 		case JelParserTreeConstants.JJTSETEXPRESSION:
 			return setLiteral(node, context);
 		}
@@ -312,6 +313,16 @@ public class JelEngine {
 				.substring(1, node.getImage().length() - 1)));
 	}
 
+	private JelNumber number(JelNode node, ScriptContext context) {
+		String s = node.getImage().toLowerCase();
+		if (s.startsWith("0x")) {
+			return objectFactory.createNumber(Long.valueOf(s.substring(2), 16)
+					.doubleValue());
+		} else {
+			return objectFactory.createNumber(Double.valueOf(s));
+		}
+	}
+
 	private JelSet setLiteral(JelNode node, ScriptContext context) {
 		int c = node.jjtGetNumChildren();
 		int flag = 0;
@@ -328,21 +339,23 @@ public class JelEngine {
 		for (int i = 0; i < c; i++) {
 			JelNode item = (JelNode) node.jjtGetChild(i);
 			if (item.jjtGetNumChildren() == 1) {
-				map.put(String.valueOf(i), evalNode((JelNode)item.jjtGetChild(0), context));
+				map.put(String.valueOf(i),
+						evalNode((JelNode) item.jjtGetChild(0), context));
 			} else if (item.jjtGetNumChildren() == 2) {
 				String name = null;
-				switch(item.jjtGetChild(0).getId()) {
+				switch (item.jjtGetChild(0).getId()) {
 				case JelParserTreeConstants.JJTIDENTIFIER:
-					name = ((JelNode)item.jjtGetChild(0)).getImage();
+					name = ((JelNode) item.jjtGetChild(0)).getImage();
 					break;
 				case JelParserTreeConstants.JJTSTRINGLITERAL:
-					name = evalNode((JelNode)item.jjtGetChild(0), context).toString();
+					name = evalNode((JelNode) item.jjtGetChild(0), context)
+							.toString();
 					break;
 				}
-				map.put(name, evalNode((JelNode)item.jjtGetChild(1), context));
+				map.put(name, evalNode((JelNode) item.jjtGetChild(1), context));
 			}
 		}
-		
+
 		return objectFactory.createSet(map);
 	}
 
