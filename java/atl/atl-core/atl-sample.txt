@@ -1,0 +1,22 @@
+@abc  // echo abc value
+@@      // echo "@"
+@@(abc) // echo "(abc)"
+@)      // error
+@@)     // echo "@)"
+
+<@print><span>@@cool</span><@/> // print "<span>@cool</span>"
+@print(){@@print{}}  // print "@print{}"
+
+
+@domain:macro [id:1, name:data.name("hello#"), value:"abc" + ""]#
+
+@end#
+
+@abc/
+
+
+@if(a>b)@>
+
+@domain:macro{
+  aaa
+@end

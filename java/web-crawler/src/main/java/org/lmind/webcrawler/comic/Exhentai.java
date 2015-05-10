@@ -31,7 +31,7 @@ public class Exhentai {
 	@Resource
 	private ThreadPoolTaskExecutor schedulingTaskExecutor;
 
-	private String start = "http://exhentai.org/g/741683/790e6ec72d/";
+	private String start = "http://exhentai.org/g/330267/e4bf92a274/";
 
 	public void run() throws Exception {
 
@@ -149,13 +149,14 @@ public class Exhentai {
 		String html;
 		Optional<Element> r = doc.select("#gdd td").stream().filter(o -> {
 			System.out.println(o.text());
-			return "Images:".equals(o.text());
+			return "Length:".equals(o.text());
 		}).findFirst();
 		if (!r.isPresent()) {
 			System.out.println("not found total size");
 		}
 		int total = Integer.parseInt(r.get().nextElementSibling().text()
-				.split("@")[0].trim());
+				.split(" ")[0].trim());
+//		int total = 215;
 		ArrayList<String> list = new ArrayList<String>();
 
 		for (int i = 0; i < 100; i++) {
@@ -177,10 +178,5 @@ public class Exhentai {
 			Thread.sleep(5000);
 		}
 		return list;
-	}
-
-	public static void main(String[] args) {
-		String a = "8 @ 1.37 MB".split("@")[0];
-		System.out.println(a.trim());
 	}
 }

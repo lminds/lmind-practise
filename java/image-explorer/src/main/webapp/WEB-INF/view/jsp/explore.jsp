@@ -23,7 +23,7 @@
     </div>
   </div>
 
-  <div id="imgBox" class="container-fluid" style="position: absolute; width: 100%; height: 100%; z-index: -5; overflow: scroll;">
+  <div id="imgBox" class="container-fluid" style="position: absolute; width: 100%; height: 100%; top:50px; z-index: -5; overflow: scroll;">
     <div>
       <input type="hidden" name="contextPath" value="${contextPath}">
       <input type="hidden" name="item" value="${list[index]}">
